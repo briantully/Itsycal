@@ -549,9 +549,15 @@ static NSString *kEventCellIdentifier = @"EventCell";
 - (void)drawRect:(NSRect)dirtyRect
 {
     CGFloat alpha = self.dim ? 0.5 : 1;
+    NSRect rect = NSMakeRect(6, NSHeight(self.bounds) - 13, 6, 6);
     NSColor *dotColor = self.eventInfo.event.calendar.color;
     [[dotColor colorWithAlphaComponent:alpha] set];
-    [[NSBezierPath bezierPathWithOvalInRect:NSMakeRect(6, NSHeight(self.bounds) - 13, 6, 6)] fill];
+    if (self.eventInfo.isAllDay) {
+        [[NSBezierPath bezierPathWithRoundedRect:rect xRadius:1 yRadius:1] fill];
+    }
+    else {
+        [[NSBezierPath bezierPathWithOvalInRect:rect] fill];
+    }
 }
 
 @end
