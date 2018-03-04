@@ -292,6 +292,9 @@ static NSString *kEventCellIdentifier = @"EventCell";
         dateFormatter = [NSDateFormatter new];
     }
     dateFormatter.timeZone = [NSTimeZone localTimeZone];
+    if (NSLocale.preferredLanguages.count > 1) {
+        dateFormatter.locale = [NSLocale localeWithLocaleIdentifier:NSLocale.preferredLanguages.firstObject];
+    }
     [dateFormatter setLocalizedDateFormatFromTemplate:@"dMMM"];
     return [dateFormatter stringFromDate:date];
 }
@@ -303,6 +306,9 @@ static NSString *kEventCellIdentifier = @"EventCell";
         dateFormatter = [NSDateFormatter new];
     }
     dateFormatter.timeZone = [NSTimeZone localTimeZone];
+    if (NSLocale.preferredLanguages.count > 1) {
+        dateFormatter.locale = [NSLocale localeWithLocaleIdentifier:NSLocale.preferredLanguages.firstObject];
+    }
     if ([self.nsCal isDateInToday:date] || [self.nsCal isDateInTomorrow:date]) {
         dateFormatter.doesRelativeDateFormatting = YES;
         dateFormatter.dateStyle = NSDateFormatterMediumStyle;
@@ -334,6 +340,10 @@ static NSString *kEventCellIdentifier = @"EventCell";
     NSString *duration = @"";
     timeFormatter.timeZone  = [NSTimeZone localTimeZone];
     intervalFormatter.timeZone  = [NSTimeZone localTimeZone];
+    if (NSLocale.preferredLanguages.count > 1) {
+        timeFormatter.locale = [NSLocale localeWithLocaleIdentifier:NSLocale.preferredLanguages.firstObject];
+        intervalFormatter.locale = [NSLocale localeWithLocaleIdentifier:NSLocale.preferredLanguages.firstObject];
+    }
     
     if (self.showLocation) {
         if (info.event.location) {

@@ -21,7 +21,11 @@
         // Make the _checkboxes array. Each checkbox has a
         // title that is the localized veryShortSymbol for a
         // day-of-the-week (dow). In English: S M T W T F S.
-        NSArray *dows = [[NSDateFormatter new] veryShortWeekdaySymbols];
+        NSDateFormatter *dateFormatter = [NSDateFormatter new];
+        if (NSLocale.preferredLanguages.count > 1) {
+            dateFormatter.locale = [NSLocale localeWithLocaleIdentifier:NSLocale.preferredLanguages.firstObject];
+        }
+        NSArray *dows = [dateFormatter veryShortWeekdaySymbols];
         NSMutableArray *checkboxes = [NSMutableArray new];
         for (NSInteger i = 0; i < 7; i++) {
             NSString *dow = [dows objectAtIndex:i];

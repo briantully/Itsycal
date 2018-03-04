@@ -392,6 +392,11 @@
     NSString *iconText;
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kShowMonthInIcon] || [[NSUserDefaults standardUserDefaults] boolForKey:kShowDayOfWeekInIcon]) {
+        NSLocale *currentLocale = NSLocale.currentLocale;
+        if (NSLocale.preferredLanguages.count > 1) {
+            currentLocale = [NSLocale localeWithLocaleIdentifier:NSLocale.preferredLanguages.firstObject];
+            _iconDateFormatter.locale = currentLocale;
+        }
         NSMutableString *template = @"d".mutableCopy;
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kShowMonthInIcon]) {
             [template appendString:@"MMM"];
@@ -399,7 +404,7 @@
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kShowDayOfWeekInIcon]) {
             [template appendString:@"EEE"];
         }
-        [_iconDateFormatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:template options:0 locale:[NSLocale currentLocale]]];
+        [_iconDateFormatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:template options:0 locale:currentLocale]];
         iconText = [_iconDateFormatter stringFromDate:[NSDate new]];
     } else {
         iconText = [NSString stringWithFormat:@"%zd", _moCal.todayDate.day];

@@ -282,6 +282,9 @@ NSString * const kMoCalendarNumRows = @"MoCalendarNumRows";
 
 - (void)updateCalendar
 {
+    if (NSLocale.preferredLanguages.count > 1) {
+        _formatter.locale = [NSLocale localeWithLocaleIdentifier:NSLocale.preferredLanguages.firstObject];
+    }
     // Month/year and DOW labels
     NSArray *months = [_formatter shortMonthSymbols];
     NSArray *dows = [_formatter veryShortWeekdaySymbols];
